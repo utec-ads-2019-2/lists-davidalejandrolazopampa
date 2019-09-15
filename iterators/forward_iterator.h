@@ -3,27 +3,28 @@
 
 #include "../iterator.h"
 
-template <typename T> 
+template <typename T>
 class ForwardIterator : public Iterator<T> {
-    public:
-        ForwardIterator() : Iterator<T>() {};
-        ForwardIterator(Node<T> *node) : Iterator<T>(node) {};
+public:
+    ForwardIterator() : Iterator<T>() {};
+    explicit ForwardIterator(Node<T> *node) : Iterator<T>(node) {};
 
-        ForwardIterator<T> operator=(ForwardIterator<T> other) {
-            // TODO
-        }
+    ForwardIterator<T> operator=(ForwardIterator<T> other) {
+        return ForwardIterator(other.current);
+    }
 
-        bool operator!=(ForwardIterator<T> other) {
-            // TODO
-        }
+    bool operator!=(ForwardIterator<T> other) {
+        return this->current!=other.current;
+    }
 
-        ForwardIterator<T> operator++() {
-            // TODO
-        }
+    ForwardIterator<T> operator++() {
+        this->current = this->current->next;
+        return *this;
+    }
 
-        T operator*() {
-            // TODO
-        }
+    T operator*() {
+        return this->current->data;
+    }
 };
 
 #endif

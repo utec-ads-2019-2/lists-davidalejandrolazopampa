@@ -3,15 +3,15 @@
 
 #include "node.h"
 
-template <typename T> 
+template <typename T>
 class Iterator {
-    protected:
-        Node<T> *current;
+protected:
+    Node<T> *current;
 
-    public:
-        Iterator() : current(nullptr) {};
-        Iterator(Node<T> *node) : current(node) {};
-        virtual T operator*() = 0;
+public:
+    Iterator() : current(nullptr) {};
+    Iterator(Node<T> *node) : current(node) {};
+    virtual T operator*() = 0;
 };
 
 #endif

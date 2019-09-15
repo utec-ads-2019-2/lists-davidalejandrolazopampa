@@ -3,31 +3,33 @@
 
 #include "../iterator.h"
 
-template <typename T> 
+template <typename T>
 class BidirectionalIterator : public Iterator<T> {
-    public:
-        BidirectionalIterator() : Iterator<T>() {};
-        BidirectionalIterator(Node<T> *node) : Iterator<T>(node) {};
+public:
+    BidirectionalIterator() : Iterator<T>() {};
+    BidirectionalIterator(Node<T> *node) : Iterator<T>(node) {};
 
-        BidirectionalIterator<T> operator=(BidirectionalIterator<T> other) {
-            // TODO
-        }
+    BidirectionalIterator<T> operator=(BidirectionalIterator<T> other) {
+        return BidirectionalIterator<T>(other.current);
+    }
 
-        bool operator!=(BidirectionalIterator<T> other) {
-            // TODO
-        }
+    bool operator!=(BidirectionalIterator<T> other) {
+        return other.current != this->current;
+    }
 
-        BidirectionalIterator<T> operator++() {
-            // TODO
-        }
+    BidirectionalIterator<T> operator++() {
+        this->current = this->current->next;
+        return *this;
+    }
 
-        BidirectionalIterator<T> operator--() {
-            // TODO
-        }
+    BidirectionalIterator<T> operator--() {
+        this->current = this->current->prev;
+        return *this;
+    }
 
-        T operator*() {
-            // TODO
-        }
+    T operator*() {
+        return this->current->data;
+    }
 };
 
 #endif

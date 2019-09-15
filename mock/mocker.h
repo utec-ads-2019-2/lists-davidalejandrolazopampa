@@ -10,31 +10,31 @@ using namespace std;
 #define MAX 100
 
 class Mocker {
-    private:
-        mt19937 rng;
-        
-    public:
-        Mocker() {
-            rng.seed(random_device()());
-        }
+private:
+    mt19937 rng;
 
-        int generateRandomInt(int min = MIN);
-        char generateRandomChar();
+public:
+    Mocker() {
+        rng.seed(random_device()());
+    }
 
-        template <typename T>
-        T* generateRandomArray(unsigned int size) {
-            T *elements = new T[size];
-            for (int i = 0; i < size; i++) {
-                if (is_same<T, int>::value) {
-                    elements[i] = generateRandomInt();
-                }
-                else if (is_same<T, char>::value) {
-                    elements[i] = generateRandomChar();
-                }
+    int generateRandomInt(int min = MIN);
+    char generateRandomChar();
+
+    template <typename T>
+    T* generateRandomArray(unsigned int size) {
+        T *elements = new T[size];
+        for (int i = 0; i < size; i++) {
+            if (is_same<T, int>::value) {
+                elements[i] = generateRandomInt();
             }
-
-            return elements;
+            else if (is_same<T, char>::value) {
+                elements[i] = generateRandomChar();
+            }
         }
+
+        return elements;
+    }
 };
 
 #endif

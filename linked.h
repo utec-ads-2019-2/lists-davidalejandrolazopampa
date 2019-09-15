@@ -6,72 +6,169 @@
 
 template <typename T>
 class LinkedList : public List<T> {
-    public:
-        LinkedList() : List<T>() {}
+public:
+    LinkedList() : List<T>() {}
 
-        T front() {
-            // TODO
+    T front() {
+        if(!empty()){
+            return this->head->data;
         }
+        throw out_of_range("No hay nodos para mostrar");
+    }
 
-        T back() {
-            // TODO
+    T back() {
+        if(!empty()){
+            return this->tail->data;
+        }else{
+            throw out_of_range("No hay nodos para mostrar");
         }
+    }
 
-        void push_front(T value) {
-            // TODO
+    void push_front(T value) {
+        auto* temp = new Node<T>;
+        if (!empty()){
+            this->head->prev = temp;
+            temp->next = this->head;
+            temp->prev = nullptr;
+            this->head = temp;
+        } else {
+            this->head = temp;
+            this->tail = temp;
         }
+        temp->data = value;
+        ++(this->nodes);
 
-        void push_back(T value) {
-            // TODO
-        }
+    }
 
-        void pop_front() {
-            // TODO
+    void push_back(T value) {
+        auto* temp = new Node<T>;
+        if (!empty()){
+            this->tail->next = temp;
+            temp->prev = this->tail;
+            temp->next = nullptr;
+            this->tail = temp;
+        } else {
+            this->head = temp;
+            this->tail = temp;
         }
+        temp->data = value;
+        ++(this->nodes);
+    }
 
-        void pop_back() {
-            // TODO
+    void pop_front() {
+        if (!empty()){
+            auto *temp = this->head;
+            this->head = this->head->next;
+            this->head->prev = nullptr;
+            delete temp;
+            --(this->nodes);
+        } else {
+            throw out_of_range("No hay nodos para eliminar");
         }
+    }
 
-        T operator[](int index) {
-            // TODO
+    void pop_back() {
+        if (!empty()){
+            if (size() == 1) {
+                delete this->tail;
+                this->head = nullptr;
+                this->tail = nullptr;
+            }else {
+                auto *temp = this->tail;
+                this->tail = this->tail->prev;
+                this->tail->next = nullptr;
+                delete temp;
+            }
+            --(this->nodes);
+        } else {
+            throw out_of_range("No hay nodos para eliminar");
         }
+    }
 
-        bool empty() {
-            // TODO
-        }
+    T operator[](int index) {
+        if(!empty() || index > this->nodes) {
+            int half = (this->nodes) / 2;
+            if (index < half) {
+                int i = 0;
+                auto* temp = this->head;
+                while (i != index) {
+                    temp = temp->next;
+                    ++i;
+                }
+                return temp->data;
+            } else {
+                int i = this->nodes - 1;
+                auto* temp = this->tail;
+                while (i != index) {
+                    temp = temp->prev;
+                    --i;
+                }
+                return temp->data;
+            }
+        } else {throw out_of_range("No hay nodos en esta posición");}
+    }
 
-        int size() {
-            // TODO
-        }
+    bool empty() {
+        return this->nodes == 0;
+    }
 
-        void clear() {
-            // TODO
-        }
+    int size() {
+        return this->nodes;
+    }
 
-        void sort() {
-            // TODO
+    void clear() {
+        while(this->head!= nullptr){
+            pop_back();
         }
-    
-        void reverse() {
-            // TODO
-        }
+    }
 
-        string name() {
-            return "Linked List";
-        }
+    void sort() {
+        // TODO
+    }
 
-        BidirectionalIterator<T> begin() {
-            // TODO
-        }
+    void reverse() {
+        auto* temp = this->tail;
+        this->tail = this->head;
+        this->head = temp;
+        this->head->next = temp->prev;
 
-	    BidirectionalIterator<T> end() {
-            // TODO
+        while (temp->next != this->tail) {
+            temp->next->next = temp->next->prev;
+            temp->next->prev = temp;
+            temp = temp->next;
         }
+        this->tail->prev = temp;
+        this->tail->next = nullptr;
+        this->head->prev = nullptr;
+    }
 
-        void merge(LinkedList<T> list) {
-            // TODO
+    string name() {
+        return "Linked List";
+    }
+
+    BidirectionalIterator<T> begin() {
+        return BidirectionalIterator<T>(this->head);
+    }
+
+    BidirectionalIterator<T> end() {
+        auto* nendnode = new Node<T>;
+        this->tail->next = nendnode;
+        nendnode->prev = this->tail;
+        return BidirectionalIterator<T>(nendnode);
+    }
+
+    void merge(LinkedList<T> list) {
+        if(!list.empty()){
+            if(empty()){
+                this->head = list.head;
+            }else{
+                this->tail->next = list.head;
+                list.head->prev = this->tail;
+            }
+            this->tail = list.tail;
         }
+        this->nodes+=list.size();
+    }
 };
 
 #endif
