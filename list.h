@@ -28,6 +28,7 @@ public:
     virtual string name() = 0;
 
     ~List() {
+        // Así no es el destructor, debería ser una iteración
             //aqui 1
             head = nullptr;
             delete head;

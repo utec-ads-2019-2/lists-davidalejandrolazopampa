@@ -8,6 +8,7 @@ struct Node {
     Node<T>* prev;
 
     void killSelf() {
+        // Así no es el killSelf, de hecho aquí no estás borrando nada
         next = nullptr;
         prev = nullptr;
         delete next;

@@ -10,12 +10,15 @@ public:
     BidirectionalIterator(Node<T> *node) : Iterator<T>(node) {};
 
     BidirectionalIterator<T> operator=(BidirectionalIterator<T> other) {
+        // No deberías crear un nuevo iterador
         return BidirectionalIterator<T>(other.current);
     }
 
     bool operator!=(BidirectionalIterator<T> other) {
         return other.current != this->current;
     }
+
+    // Falta controlar ciertos casos
 
     BidirectionalIterator<T> operator++() {
         this->current = this->current->next;

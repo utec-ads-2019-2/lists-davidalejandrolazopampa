@@ -58,6 +58,7 @@ public:
     }
 
     void pop_front() {
+        // Podrías modificar el código para tener el --nodes fuera y no se repita
         if (size() == 1) {
             delete this->head;
             this->head = nullptr;
@@ -76,6 +77,7 @@ public:
 
     void pop_back() {
         if (!empty()) {
+            // Intenta usar los punteros en vez del atributo node
             if (size() == 1) {
                 delete this->tail;
                 this->head = nullptr;
@@ -95,6 +97,7 @@ public:
     }
 
     T operator[](int index) {
+        // index > this->nodes?
         if (!empty() || index > this->nodes) {
             auto* temp = this->head;
             for (int i = 0; i < index; ++i) {
@@ -140,6 +143,7 @@ public:
 
 
     void reverse() {
+        // No es muy eficiente
         auto* aux = this->head;
         this->head = this->tail;
         this->tail = aux;
@@ -164,6 +168,7 @@ public:
     }
 
     ForwardIterator<T> end() {
+        // Estás creando un nuevo nodo, eso no debería pasar
         auto* nendnode = new Node<T>;
         this->tail->next = nendnode;
         return ForwardIterator<T>(nendnode);

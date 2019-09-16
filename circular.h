@@ -56,6 +56,7 @@ public:
     }
 
     void pop_front() {
+        // No es necesario el throw en estos casos, pero no está mal
         if (!empty()){
             auto *temp = this->head;
             this->head = this->head->next;
@@ -86,6 +87,7 @@ public:
     }
 
     T operator[](int index) {
+        // En la circular no es necearia la segunda condición (si estuviera bien)
         if(!empty() || index > this->nodes) {
             int half = (this->nodes) / 2;
             if (index < half) {
@@ -152,6 +154,7 @@ public:
     }
 
     BidirectionalIterator<T> end() {
+        // Cómo controlas en este caso la iteración en bucle, sin do while?
         return BidirectionalIterator<T>(this->head);
     }
 
